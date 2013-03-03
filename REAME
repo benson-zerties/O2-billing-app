@@ -1,0 +1,8 @@
+This is a little script, which fetches your O2 bills by web scraping.
+Username (phone number) and Password are stored using Kwallet.
+
+=== install ===
+run "./get_o2_bill.py -s" to store user data in your wallet
+
+afterwards call ./run_skript periodically from a cronjob
+

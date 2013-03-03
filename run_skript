@@ -1,0 +1,31 @@
+#!/bin/bash
+
+LOGFILE="get_o2_bill.log"
+
+export DISPLAY=:0
+
+# change dir to script directory
+cd `dirname $0`
+SELF="$PWD""/""run_skript"
+
+echo `date` >> "$LOGFILE"
+echo "$USER" >> "$LOGFILE"
+
+# start kwalletmanager
+/usr/bin/kwalletmanager &
+sleep 3s
+
+./get_o2_bill.py >> "$LOGFILE"
+
+# if something failed -> reschedule command
+if [ $? -ne 0 ]; then
+    at -f "$SELF" -v now + 15 minutes
+    echo "failed ... rescheduling command" >> "$LOGFILE"
+    echo "$SELF" >> "$LOGFILE"
+else
+    echo "downloading bill succeeded" >> "$LOGFILE"
+fi
+
+# just add a newline at the end
+echo "=====================================================" >> "$LOGFILE"
+echo "" >> "$LOGFILE"

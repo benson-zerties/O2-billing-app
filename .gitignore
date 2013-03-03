@@ -1,0 +1,8 @@
+*.html
+*.pyc
+*.pyo
+*.vim
+*~
+*.desktop
+*.swp
+helloWorld/contents/code/serialized__content.txt
