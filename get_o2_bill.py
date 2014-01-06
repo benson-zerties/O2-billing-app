@@ -17,8 +17,8 @@ login_data = {
     'msisdnTextField'  : '',
     'passwordTextField': '',
 }
-O2_BILL_DOWNLOAD_PAGE="http://wap.o2online.de/vertrag/rechnung/aktuelle-rechnung"
-O2_LOGOUT="http://wap.o2online.de/ndm/?url=loggedout_touch&logout=1"
+O2_BILL_DOWNLOAD_PAGE="http://m.o2online.de/vertrag/rechnung/aktuelle-rechnung"
+O2_LOGOUT="http://m.o2online.de/ndm/?url=loggedout_touch&logout=1"
 O2_LOGIN="https://login.m.o2online.de/login/login?wicket:interface=:198:loginForm::IFormSubmitListener::"
 O2_SSL_CERTIFICATE="login.o2online.de"
 
@@ -79,11 +79,6 @@ login_data_encoded = m2urllib.urlencode(login_form_data)
 
 ctx = SSL.Context()
 
-# TODO: remove next line, because it makes the connection unsecure,
-#       so far it's needed, since O2 is too stupid to configure <CN>
-#       in their certificate properly
-SSL.Connection.postConnectionCheck = None
-
 # If you comment out the next 2 lines, the connection won't be secure
 ctx.set_verify(SSL.verify_peer | SSL.verify_fail_if_no_peer_cert, depth=9)
 ctx.load_verify_locations(O2_SSL_CERTIFICATE)
@@ -101,13 +96,13 @@ try:
     ctx.load_verify_locations(O2_SSL_CERTIFICATE)
 
     # go to billing page
-    resp = opener.open('http://wap.o2online.de/vertrag/rechnung/aktuelle-rechnung')
+    resp = opener.open('http://m.o2online.de/vertrag/rechnung/aktuelle-rechnung')
     last_respone = resp.read();
 
     print "get billing page"
 
     parser = MyHtmlParser(
-        u'http://wap.o2online.de/vertrag/rechnung/',
+        u'http://m.o2online.de/vertrag/rechnung/',
         r';jsessionid=',
         r'format=rechnung.pdf',
         last_respone
